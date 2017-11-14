@@ -2,6 +2,8 @@
 
 A line generator written in [Processing](https://processing.org).
 
+<img src="mod-line-generator.png" width="100%">
+
 ## TODO:
 
 * ~~Generate horizontal lines mode~~.
