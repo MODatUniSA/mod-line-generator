@@ -12,6 +12,12 @@ void setup() {
   // Projector dimensions
   // size(1920, 1080);
   
+  // Frame rate to render
+  //frameRate(60);
+  
+  // Hide the curser
+  noCursor();
+  
   // Draw to the second monitor for debugging
   fullScreen(2);
   
