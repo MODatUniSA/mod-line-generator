@@ -2,11 +2,23 @@ float linePosition;
 float startPosition;
 float lineWidth;
 float speed;
+float maxSpeed;
+boolean speedIncrease;
+float speedIncreaseValue;
+boolean speedIncreasing;
 float loopNumber;
 boolean verticalOrientation;
 boolean oppositeDirection;
 float orientedScreenWidth;
 float orientedScreenHeight;
+color lineColour;
+color backgroundColour;
+
+// Colour presets
+color colourMODlightPurple = color(187,41,187);
+color colourMODdarkPurple = color(110,18,115);
+color colourWhite = color(255,255,255);
+color colourBlack = color(0,0,0);
 
 void setup() {
   // Projector dimensions
@@ -27,6 +39,12 @@ void setup() {
   // Set orientation
   verticalOrientation = true;
   
+  // Set it to speed up
+  speedIncrease = true;
+  speedIncreaseValue = 0.01;
+  maxSpeed = 10;
+  speedIncreasing = true;
+  
   orientedScreenWidth = width;
   orientedScreenHeight = height;
   if (verticalOrientation) {
@@ -36,10 +54,12 @@ void setup() {
   
   // Configure the lines and speed
   lineWidth = orientedScreenHeight/20;
-  speed = 2;
+  speed = 1;
   
-  // Line colour and width
-  stroke(0);
+  // Background, line colour and width
+  backgroundColour = color(colourMODlightPurple);
+  lineColour = color(colourBlack);
+  stroke(lineColour);
   strokeWeight(lineWidth);
   
   // General setup
@@ -52,8 +72,7 @@ void setup() {
 }
 
 void draw() {
-  // Background colour
-  background(255);
+  background(backgroundColour);
   smooth();
   
   // Draw enough lines to cover 2x screen height
@@ -70,6 +89,31 @@ void draw() {
     linePosition += speed;
   } else {
     linePosition -= speed;
+  }
+  
+  // Increase the speed if set
+  if (speedIncrease) {
+    if (speedIncreasing) {
+      if (speed > 0 && speed < maxSpeed) {
+        speedIncreasing = true;
+        speed += speedIncreaseValue;
+      } else if (speed >= maxSpeed) {
+        speedIncreasing = false;
+        speed -= speedIncreaseValue;
+        println("Maximum speed hit");
+      }
+    } else {
+      if (speed > 0 && speed < maxSpeed) {
+        speedIncreasing = false;
+        speed -= speedIncreaseValue;
+      } else if (speed <= 0) {
+        speedIncreasing = true;
+        speed += speedIncreaseValue;
+        println("Minimum speed hit");
+      }
+    }
+    //println("Speed: ", speed);
+    //println("Increasing? ", speedIncreasing);
   }
   
   // Start again if we've moved one screen height
