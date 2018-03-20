@@ -1,3 +1,8 @@
+// Video exporter
+import com.hamoid.*;
+VideoExport videoExport;
+
+// Line generator code
 float linePosition;
 float startPosition;
 float lineWidth;
@@ -22,7 +27,11 @@ color colourBlack = color(0,0,0);
 
 void setup() {
   // Projector dimensions
-  // size(1920, 1080);
+   size(1280, 800);
+  
+  // Video export
+  videoExport = new VideoExport(this, "line-generator.mp4");
+  videoExport.startMovie();
   
   // Frame rate to render
   //frameRate(60);
@@ -31,7 +40,7 @@ void setup() {
   noCursor();
   
   // Draw to the second monitor for debugging
-  fullScreen(2);
+  //fullScreen(2);
   
   // Set direction to false for opposite direction
   oppositeDirection = false;
@@ -42,7 +51,7 @@ void setup() {
   // Set it to speed up
   speedIncrease = true;
   speedIncreaseValue = 0.01;
-  maxSpeed = 10;
+  maxSpeed = 7;
   speedIncreasing = true;
   
   orientedScreenWidth = width;
@@ -129,5 +138,16 @@ void draw() {
       loopNumber += 1;
       println("Loop #", loopNumber);
     }
+  }
+  
+  // Save frame for video export
+  videoExport.saveFrame();
+}
+
+void keyPressed() {
+  if (key == 'q') {
+    // Pressing 'q' quits the sketch and saves the movie
+    videoExport.endMovie();
+    exit();
   }
 }
