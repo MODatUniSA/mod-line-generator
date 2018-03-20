@@ -31,6 +31,9 @@ void setup() {
   
   // Video export
   videoExport = new VideoExport(this, "line-generator.mp4");
+  // videoExport.setQuality(100, 256); // video quality, audio quality
+  //videoExport.setFrameRate(frameRate);
+  videoExport.setDebugging(false);
   videoExport.startMovie();
   
   // Frame rate to render
